@@ -24,7 +24,6 @@ Before we take any further actions on the challenges or do any investigations, w
 Make sure you verify the **SHA1SUM** hash value of any files you download by doing the following:
 
 ![](Images/Sha1sum_check.png)
-<br></br>
 
 Below are all files that are present after extracting the zip archive:
 
