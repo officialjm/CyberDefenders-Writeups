@@ -13,9 +13,40 @@ The following skills that are gained/utilized in this challenge are: `Log Analys
 </p>
 <br></br>
 
+<h1> First Impressions </h1>
+<p>
+Before we take any further actions on the challenges or do any investigations, we need to realize the initial scope of the CTF. Looking at the challenge instructions, we are given a zip file and a list of files to focus our analysis on:
+
+    File Name: c26-Hammered.zip
+    File Size: 944 KB
+    SHA1SUM: c5282824e485cbafe4b13a942759fd6720433929
+
+Make sure you verify the **SHA1SUM** hash value of any files you download by doing the following:
+
+![](Images/Sha1sum_check.png)
+<br></br>
+
+Below are all files that are present after extracting the zip archive:
+
+![](Images/Hammered_Extracted.png)
+
+**Files in Scope**:
+- kern.log
+- auth.log
+- daemon.log
+- dmesg
+- apache2
+
+
+</p>
+<br></br>
+
 <h1> Challenge Questions </h1>
 
 ### Q1. Which service did the attackers use to gain access to the system?
+<p>
+
+</p>
 <br></br>
 
 ### Q2. What is the operating system version of the targeted system?
