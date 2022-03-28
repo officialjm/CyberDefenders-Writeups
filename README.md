@@ -11,6 +11,6 @@
 
 <br></br>
 Click on any of the following to navigate to a CTF challenge write-up:
- - [Hammered](https://github.com/officialjm/CyberDefenders-Writeups/tree/main/CTFs/Hammered) - `Log Analysis` `WebServer` `Honeypot` `Apache2` `Ubuntu`
+ - [Hammered](https://github.com/officialjm/CyberDefenders-Writeups/tree/main/CTFs/Hammered) - `Log Analysis` `WebServer` `Honeypot` `Apache2`
  - [Bucket](https://github.com/officialjm/CyberDefenders-Writeups/tree/main/CTFs/Bucket) - `AWS S3` `Cloud` `Log Analysis` `Incident Response` 
  
