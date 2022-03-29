@@ -21,7 +21,7 @@ Before we take any further actions on the challenges or do any investigations, w
     File Size: 944 KB
     SHA1SUM: c5282824e485cbafe4b13a942759fd6720433929
 
-Make sure you verify the **SHA1SUM** hash value of any files you download by doing the following:
+Make sure you verify the **SHA1SUM** hash value of any files you download by doing the following (this will verify the integrity of the downloaded file):
 
 ![](Images/Sha1sum_check.png)
 
