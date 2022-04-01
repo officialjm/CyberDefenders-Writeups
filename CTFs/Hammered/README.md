@@ -45,6 +45,22 @@ Below are all files that are present after extracting the zip archive:
 ### Q1. Which service did the attackers use to gain access to the system?
 <p>
 
+First we can check and verify what log file is needed for this problem which can be found in [this article](https://www.eurovps.com/blog/important-linux-log-files-you-must-be-monitoring/). You can conclude that the `auth.log` file is of interest, so we can look with this command:
+
+```bash
+grep "fail" auth.log | less
+```
+
+```log
+pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=8.12.45.242  user=root
+pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=8.12.45.242  user=root
+pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=8.12.45.242  user=root
+pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=8.12.45.242  user=root
+```         
+
+From this output we can see that there are many attempts to login via `sshd`.
+
+**Answer** ✅: SSH
 </p>
 <br></br>
 
