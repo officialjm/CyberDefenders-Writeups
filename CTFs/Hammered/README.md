@@ -56,7 +56,7 @@ pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser
 pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=8.12.45.242  user=root
 pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=8.12.45.242  user=root
 pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=8.12.45.242  user=root
-```         
+```
 
 From this output we can see that there are many attempts to login via `sshd`.
 
@@ -107,37 +107,103 @@ head dmesg
 <br></br>
 
 ### Q3. What is the name of the compromised account?
+<p>
 
 From our previous investigation in the first question, we can see that most of the attempts were done via the `root` user account.
 
 **Answer** ✅: root
-
 </p>
 <br></br>
 
 ### Q4. Consider that each unique IP represents a different attacker. How many attackers were able to get access to the system?
 <p>
 
+For this question, I actually got the question right with a guess... (I used the following command and got 17 unique IPs back, excluding the one local IP):
+
+```bash
+grep sshd auth.log| grep "Accepted password" | awk '{print $11}'  | sort | uniq -c | sort -n
+```
+```
+1 10.0.1.2
+1 151.81.204.141
+1 151.81.205.100
+1 151.82.3.201
+1 188.131.22.69
+1 190.167.70.87
+1 190.167.74.184
+1 193.1.186.197
+1 201.229.176.217
+1 222.169.224.197
+1 222.66.204.246
+1 61.168.227.12
+1 94.52.185.9
+2 121.11.66.70
+2 122.226.202.12
+3 190.166.87.164
+4 188.131.23.37
+4 219.150.161.20
+```
+
+**Answer** ✅: 6
 </p>
 <br></br>
 
 ### Q5. Which attacker's IP address successfully logged into the system the most number of times?
 <p>
 
+We can count them with a command like this: 
+```bash
+grep "Accepted" auth.log| grep Accepted | grep root | awk '{print $11}' | sort | uniq -c | sort -n
+```
+![](Images/IPs_accepted.png)
+
+**Answer** ✅: 219.150.161.20
 </p>
 <br></br>
 
 ### Q6. How many requests were sent to the Apache Server?
+<p>
+
+For this question, we can reference [this article](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) which shows that HTTP defines a set of request methods to indicate the desired action to be performed for a given resource. This type of information will appear on the Apache server in the `www-access.log` file:
+
+```bash
+grep "HTTP" www-access.log | wc -l
+```
+
+**Answer** ✅: 365
+</p>
 <br></br>
 
 ### Q7. How many rules have been added to the firewall?
 <p>
 
+This question is asking you to find all rules that have been ALLOWED on the server via the firewall. You can find more about firewalls on linux (or in this case UFW) [here](https://www.linux.com/training-tutorials/introduction-uncomplicated-firewall-ufw/). I did this with a simple grep comment to find all activity that has to do with ALLOW:
+
+```bash 
+grep ufw* auth.log| grep allow | awk '{print $NF}' | sort -u | uniq -c
+```
+
+```
+1 113
+1 113/identd
+1 113/Identd
+1 22
+1 2685/tcp
+1 2685/telnet
+1 53
+1 telnet
+```
+
+You can see that there are duplicates in the output but we can conclude that there are 6 entries.
+
+**Answer** ✅: 6
 </p>
 <br></br>
 
 ### Q8. One of the downloaded files to the target system is a scanning tool. Provide the tool name.
 <p>
+
+**Answer** ✅: NMAP
 
 </p>
 <br></br>
@@ -145,23 +211,64 @@ From our previous investigation in the first question, we can see that most of t
 ### Q9. When was the last login from the attacker with IP 219.150.161.20? Format: MM/DD/YYYY HH:MM:SS AM
 <p>
 
+For this question, we can simpily just grep the timestamp to get the FULL time and date:
+
+```bash
+grep 04:43:15 auth.log
+```
+
+![](Images/Timestamp.png)
+
+**Answer** ✅: 04/19/2010 05:56:05 AM
 </p>
 <br></br>
 
 ### Q10. The database displayed two warning messages, provide the most important and dangerous one.
 <p>
 
+We will be checking the `daemon.log` file. This is because database will run as a service so its information will store in here:
+
+```bash
+grep WARN daemon.log | grep sql
+```
+
+![](Images/sql_error.png)
+
+**Answer** ✅: mysql.user contains 2 root accounts without password!
 </p>
 <br></br>
 
 ### Q11. Multiple accounts were created on the target system. Which one was created on Apr 26 04:43:15?
 <p>
 
+For this question, we can simpily use a previous grep the timestamp to get the user that was associated with the account creation:
+
+```bash
+grep 04:43:15 auth.log | grep user
+```
+
+![](Images/User_wind3str0y.png)
+
+**Answer** ✅: wind3str0y 
 </p>
 <br></br>
 
 ### Q12. Few attackers were using a proxy to run their scans. What is the corresponding user-agent used by this proxy?
 <p>
 
+We can check the `www-access.log` file for this information as it pertains to User-Agent info on the webserver. We can grep to filter this:
+
+```bash
+cat www-access.log | cut -d ' ' -f 12 | sort | uniq
+```
+```
+"Apple-PubSub/65.12.1"
+"Mozilla/4.0
+"Mozilla/5.0
+"pxyscand/2.1"
+"WordPress/2.9.2;
+```
+
+**Answer** ✅: pxyscand/2.1
 </p>
 <br></br>
