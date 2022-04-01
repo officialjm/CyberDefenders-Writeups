@@ -107,8 +107,8 @@ head dmesg
 <br></br>
 
 ### Q3. What is the name of the compromised account?
-<p>
-From our previous investigation in the first question, we can see that most of the attempts were done via the `root` user account (can also see this with the _uid=0_).
+
+From our previous investigation in the first question, we can see that most of the attempts were done via the `root` user account.
 
 **Answer** ✅: root
 
